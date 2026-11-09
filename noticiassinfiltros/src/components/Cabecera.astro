@@ -1,0 +1,47 @@
+---
+const enlaces = [
+  { href: '/', texto: 'Inicio' },
+  { href: '/episodios', texto: 'Episodios' },
+  { href: '/noticias', texto: 'Noticias' },
+  { href: '/nosotras', texto: 'Nosotras' },
+  { href: '/apoya', texto: 'Apoya' },
+];
+const ruta = Astro.url.pathname;
+const activo = (href: string) => (href === '/' ? ruta === '/' : ruta.startsWith(href));
+---
+
+<header class="cabecera">
+  <div class="contenedor cabecera__fila">
+    <a class="logo" href="/" aria-label="Noticias sin filtros, ir al inicio">
+      <span class="logo__punto" aria-hidden="true"></span>
+      <span>Noticias <span class="logo__rojo">sin filtros</span></span>
+    </a>
+
+    <button class="menu-boton" type="button" aria-expanded="false" aria-controls="navegacion">Menú</button>
+
+    <nav class="nav" id="navegacion" aria-label="Principal" data-abierto="false">
+      <ul class="nav__lista">
+        {enlaces.map((e) => (
+          <li><a href={e.href} aria-current={activo(e.href) ? 'page' : undefined}>{e.texto}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const boton = document.querySelector<HTMLButtonElement>('.menu-boton');
+  const nav = document.querySelector<HTMLElement>('#navegacion');
+  boton?.addEventListener('click', () => {
+    const abierto = boton.getAttribute('aria-expanded') === 'true';
+    boton.setAttribute('aria-expanded', String(!abierto));
+    nav?.setAttribute('data-abierto', String(!abierto));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && boton?.getAttribute('aria-expanded') === 'true') {
+      boton.setAttribute('aria-expanded', 'false');
+      nav?.setAttribute('data-abierto', 'false');
+      boton.focus();
+    }
+  });
+</script>

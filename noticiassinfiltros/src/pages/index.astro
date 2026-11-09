@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import { presentadoras, episodioDestacado, noticiasDemo, redes } from '../data/demo';
+---
+
+<Base>
+  <section class="contenedor portada" aria-labelledby="titulo-principal">
+    <div>
+      <h1 class="marca" id="titulo-principal">
+        <span class="marca__linea" style="--retraso:0.25s">Noticias</span>
+        <span class="marca__linea" style="--retraso:0.55s">sin</span>
+        <span class="marca__linea marca__linea--roja" style="--retraso:1.15s">filtros</span>
+      </h1>
+      <p class="lema">Tres voces. Una conversación. Sin filtros.</p>
+      <div class="acciones">
+        <a class="boton boton--rojo" href="/episodios">Ver episodios</a>
+        <a class="boton" href="/noticias">Leer noticias</a>
+      </div>
+    </div>
+
+    <figure class="episodio-destacado">
+      <div class="episodio-destacado__marco" role="img" aria-label="Espacio reservado para el reproductor del último episodio">
+        <span class="demo">Demo</span>
+        <span class="episodio-destacado__play" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+        </span>
+      </div>
+      <figcaption>
+        <p class="episodio-destacado__numero">Último episodio, n.º {episodioDestacado.numero}</p>
+        <p class="episodio-destacado__titulo">{episodioDestacado.titulo}</p>
+        <p class="episodio-destacado__fecha">{episodioDestacado.fecha}</p>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="contenedor seccion" aria-labelledby="titulo-voces">
+    <div class="encabezado-seccion">
+      <h2 class="titulo-seccion" id="titulo-voces">Tres voces</h2>
+      <a href="/nosotras">Conocer a las presentadoras</a>
+    </div>
+    <ul class="voces">
+      {presentadoras.map((p) => (
+        <li class="voz">
+          <div class="voz__retrato" aria-hidden="true">{p.inicial}</div>
+          <h3 class="voz__nombre">{p.nombre}</h3>
+          <p class="voz__rol">{p.rol}</p>
+          <p class="voz__bio"><span class="demo">Demo</span> Biografía y foto pendientes.</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="contenedor seccion" aria-labelledby="titulo-noticias">
+    <div class="encabezado-seccion">
+      <h2 class="titulo-seccion" id="titulo-noticias">Noticias</h2>
+      <a href="/noticias">Ver todas las noticias</a>
+    </div>
+    <ul class="noticias">
+      {noticiasDemo.map((n) => (
+        <li class="noticia">
+          <div class="noticia__imagen" aria-hidden="true"></div>
+          <p class="noticia__categoria">{n.categoria} <span class="demo">Demo</span></p>
+          <h3 class="noticia__titulo">{n.titulo}</h3>
+          <p class="noticia__resumen">{n.resumen}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="contenedor seccion" aria-labelledby="titulo-redes">
+    <div class="encabezado-seccion">
+      <h2 class="titulo-seccion" id="titulo-redes">Síguenos</h2>
+    </div>
+    <ul class="redes">
+      {redes.map((r) => <li class="red">{r}</li>)}
+    </ul>
+    <p class="nota"><span class="demo">Demo</span> Los enlaces a sus cuentas se agregarán desde el panel cuando los tengamos.</p>
+  </section>
+</Base>

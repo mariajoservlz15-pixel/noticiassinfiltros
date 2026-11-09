@@ -1,0 +1,262 @@
+/* ============ Tokens ============ */
+:root {
+  --negro: #070708;
+  --grafito: #131315;
+  --humo: #232326;
+  --ceniza: #9c9ea3;
+  --papel: #f1efea;
+  --rojo: #e3151d;        /* rellenos y elementos grandes */
+  --rojo-texto: #ff5a5f;  /* rojo legible sobre negro en texto pequeño */
+
+  --f-titulo: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  --f-texto: 'Newsreader Variable', 'Newsreader', Georgia, serif;
+
+  --t-0: 1.125rem;
+  --t-1: 1.4rem;
+  --t-2: 1.75rem;
+  --t-3: clamp(2rem, 4.5vw, 2.9rem);
+  --t-hero: clamp(3.6rem, 14vw, 9.5rem);
+
+  --ancho: 76rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --espacio-seccion: clamp(4rem, 9vw, 7rem);
+}
+
+/* ============ Base ============ */
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: dark; scroll-padding-top: 5rem; }
+body {
+  margin: 0;
+  background: var(--negro);
+  color: var(--papel);
+  font-family: var(--f-texto);
+  font-size: var(--t-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* Grano de película y viñeta: fijos, sutiles, sin interacción */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 50; pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 49; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 30%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+:focus-visible { outline: 3px solid var(--papel); outline-offset: 3px; }
+
+.saltar {
+  position: absolute; left: var(--gutter); top: -4rem; z-index: 100;
+  background: var(--papel); color: var(--negro);
+  padding: 0.6rem 1rem; text-decoration: none; font-weight: 600;
+}
+.saltar:focus { top: 0.75rem; }
+
+.contenedor {
+  width: min(100% - 2 * var(--gutter), var(--ancho));
+  margin-inline: auto;
+}
+
+/* ============ Piezas reutilizables ============ */
+.titulo-seccion {
+  font-family: var(--f-titulo);
+  font-weight: 400;
+  font-size: var(--t-3);
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+.encabezado-seccion {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 0.75rem 2rem;
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--rojo);
+}
+.encabezado-seccion a { color: var(--papel); text-underline-offset: 0.25em; }
+
+.boton {
+  display: inline-block;
+  padding: 0.85rem 1.6rem;
+  font-family: var(--f-texto);
+  font-size: 1.05rem; font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--papel);
+  color: var(--papel);
+  background: transparent;
+  cursor: pointer;
+}
+.boton:hover { background: var(--papel); color: var(--negro); }
+.boton--rojo { background: var(--rojo); border-color: var(--rojo); color: #fff; }
+.boton--rojo:hover { background: #fff; border-color: #fff; color: var(--rojo); }
+
+/* Marca para todo el contenido que no es real todavía */
+.demo {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid var(--rojo-texto);
+  color: var(--rojo-texto);
+  font-size: 0.85rem; font-weight: 600; font-style: italic;
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+/* ============ Cabecera ============ */
+.cabecera {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(7, 7, 8, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--humo);
+}
+.cabecera__fila {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 4.25rem;
+}
+.logo {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--f-titulo); font-size: 1.45rem; line-height: 1;
+  text-transform: uppercase; text-decoration: none; letter-spacing: 0.02em;
+}
+.logo__punto { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--rojo); }
+.logo__rojo { color: var(--rojo-texto); }
+
+.nav__lista { display: flex; gap: 0.25rem; }
+.nav a {
+  display: block; padding: 0.5rem 0.9rem;
+  text-decoration: none; color: var(--ceniza); font-weight: 500;
+}
+.nav a:hover, .nav a[aria-current='page'] { color: var(--papel); }
+.nav a[aria-current='page'] { box-shadow: inset 0 -3px 0 var(--rojo); }
+
+.menu-boton {
+  display: none;
+  background: none; border: 2px solid var(--humo); color: var(--papel);
+  padding: 0.5rem 0.9rem; font: inherit; font-weight: 600; cursor: pointer;
+}
+
+@media (max-width: 52rem) {
+  .menu-boton { display: block; }
+  .nav { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--grafito); border-bottom: 1px solid var(--humo); }
+  .nav[data-abierto='true'] { display: block; }
+  .nav__lista { flex-direction: column; padding: 0.5rem var(--gutter) 1rem; }
+  .nav a { padding: 0.85rem 0; font-size: 1.15rem; }
+}
+
+/* ============ Portada ============ */
+.portada {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+  padding-block: clamp(3rem, 7vw, 6rem) var(--espacio-seccion);
+}
+@media (max-width: 62rem) { .portada { grid-template-columns: 1fr; } }
+
+/* El momento memorable: tres barras de censura se retiran y dejan leer la frase */
+.marca {
+  font-family: var(--f-titulo); font-weight: 400;
+  font-size: var(--t-hero); line-height: 0.9;
+  text-transform: uppercase; letter-spacing: -0.005em;
+}
+.marca__linea { display: block; width: fit-content; position: relative; }
+.marca__linea::after {
+  content: ''; position: absolute; inset: 0.06em 0 0.02em;
+  background: var(--papel);
+  transform-origin: right center;
+  animation: descubrir 0.85s cubic-bezier(0.7, 0, 0.2, 1) var(--retraso, 0s) forwards;
+}
+.marca__linea--roja::after { background: var(--rojo); }
+.marca__linea--roja { color: var(--papel); }
+@keyframes descubrir { to { transform: scaleX(0); } }
+
+.lema {
+  margin-top: 1.75rem; max-width: 30ch;
+  font-size: var(--t-2); font-style: italic; line-height: 1.25;
+  color: var(--papel);
+}
+.acciones { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+
+.episodio-destacado { margin: 0; }
+.episodio-destacado__marco {
+  position: relative; aspect-ratio: 16 / 9;
+  display: grid; place-items: center;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 14px, rgba(255, 255, 255, 0.025) 14px 15px),
+    linear-gradient(160deg, var(--humo), var(--grafito) 60%);
+  border: 1px solid var(--humo);
+}
+.episodio-destacado__play {
+  width: 5rem; height: 5rem; border-radius: 50%;
+  display: grid; place-items: center; background: var(--rojo);
+}
+.episodio-destacado__play svg { width: 1.8rem; height: 1.8rem; fill: #fff; margin-left: 0.2rem; }
+.episodio-destacado__marco .demo { position: absolute; top: 0.9rem; left: 0.9rem; }
+.episodio-destacado figcaption { padding-top: 1rem; }
+.episodio-destacado__numero { color: var(--rojo-texto); font-weight: 600; }
+.episodio-destacado__titulo { font-size: var(--t-1); line-height: 1.2; margin-top: 0.2rem; }
+.episodio-destacado__fecha { color: var(--ceniza); margin-top: 0.35rem; font-size: 0.98rem; }
+
+/* ============ Tres voces ============ */
+.seccion { padding-block: 0 var(--espacio-seccion); }
+.voces { display: grid; grid-template-columns: repeat(3, 1fr); }
+.voz { padding: 0 clamp(1rem, 2.5vw, 2rem); border-left: 1px solid var(--humo); }
+.voz:first-child { padding-left: 0; border-left: 0; }
+.voz:last-child { padding-right: 0; }
+.voz__retrato {
+  aspect-ratio: 3 / 4; display: grid; place-items: center;
+  background: linear-gradient(180deg, var(--humo), var(--grafito));
+  font-family: var(--f-titulo); font-size: clamp(4rem, 12vw, 8rem); color: var(--ceniza);
+}
+.voz__nombre { font-family: var(--f-titulo); font-weight: 400; font-size: var(--t-2); text-transform: uppercase; margin-top: 1rem; line-height: 1.1; }
+.voz__rol { color: var(--ceniza); }
+.voz__bio { margin-top: 0.6rem; color: var(--ceniza); font-size: 1rem; }
+@media (max-width: 44rem) {
+  .voces { grid-template-columns: 1fr; gap: 2.5rem; }
+  .voz, .voz:first-child, .voz:last-child { padding: 0; border-left: 0; }
+  .voz__retrato { aspect-ratio: 16 / 9; }
+}
+
+/* ============ Noticias ============ */
+.noticias { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.25rem, 3vw, 2.25rem); }
+.noticia { border-top: 1px solid var(--humo); padding-top: 1.1rem; }
+.noticia__imagen { aspect-ratio: 16 / 10; background: linear-gradient(160deg, var(--humo), var(--grafito)); margin-bottom: 1rem; }
+.noticia__categoria { color: var(--rojo-texto); font-weight: 600; font-size: 0.98rem; }
+.noticia__titulo { font-size: var(--t-1); line-height: 1.2; margin: 0.25rem 0 0.5rem; }
+.noticia__resumen { color: var(--ceniza); font-size: 1rem; }
+@media (max-width: 52rem) { .noticias { grid-template-columns: 1fr; } }
+
+/* ============ Redes ============ */
+.redes { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.red {
+  padding: 0.7rem 1.2rem; border: 1px solid var(--humo); color: var(--ceniza);
+}
+.nota { color: var(--ceniza); margin-top: 1rem; font-size: 1rem; }
+
+/* ============ Pie ============ */
+.pie { border-top: 2px solid var(--rojo); padding-block: 3rem 2.5rem; background: var(--grafito); }
+.pie__fila { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
+.pie__lema { font-size: var(--t-1); font-style: italic; max-width: 26ch; line-height: 1.25; }
+.pie__enlaces { display: flex; flex-direction: column; gap: 0.4rem; }
+.pie__enlaces a { color: var(--ceniza); text-decoration: none; }
+.pie__enlaces a:hover { color: var(--papel); text-decoration: underline; }
+.pie__legal { margin-top: 2.5rem; color: var(--ceniza); font-size: 0.95rem; }
+
+/* ============ Página pendiente ============ */
+.pendiente { padding-block: clamp(4rem, 10vw, 8rem); max-width: 40rem; }
+.pendiente p { margin-top: 1.25rem; color: var(--ceniza); }
+
+/* ============ Movimiento reducido ============ */
+@media (prefers-reduced-motion: reduce) {
+  .marca__linea::after { display: none; }
+  html { scroll-behavior: auto; }
+}
