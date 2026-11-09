@@ -9,10 +9,12 @@ import Pie from '../components/Pie.astro';
 interface Props {
   titulo?: string;
   descripcion?: string;
+  imagen?: string;
 }
 
 const {
   titulo,
+  imagen,
   descripcion = 'Noticias sin filtros: un podcast de conversación sobre noticias y temas de actualidad, hecho en Colombia para todo el mundo.',
 } = Astro.props;
 
@@ -38,7 +40,9 @@ const canonica = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={descripcion} />
     <meta property="og:url" content={canonica} />
     <meta property="og:locale" content="es_CO" />
+    {imagen && <meta property="og:image" content={imagen} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <slot name="head" />
   </head>
   <body>
     <a class="saltar" href="#contenido">Saltar al contenido</a>

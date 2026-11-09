@@ -1,0 +1,36 @@
+---
+interface Props { url: string; titulo: string; }
+const { url, titulo } = Astro.props;
+const u = encodeURIComponent(url);
+const t = encodeURIComponent(titulo);
+const redes = [
+  { nombre: 'WhatsApp', href: `https://wa.me/?text=${t}%20${u}` },
+  { nombre: 'X', href: `https://twitter.com/intent/tweet?text=${t}&url=${u}` },
+  { nombre: 'Facebook', href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
+];
+---
+
+<div class="compartir">
+  <span class="compartir__etiqueta">Compartir</span>
+  <ul class="compartir__lista">
+    {redes.map((r) => (
+      <li><a class="boton boton--chico" href={r.href} target="_blank" rel="noopener noreferrer">{r.nombre}</a></li>
+    ))}
+    <li><button class="boton boton--chico" type="button" data-copiar={url}>Copiar enlace</button></li>
+  </ul>
+  <p class="compartir__aviso" role="status" aria-live="polite"></p>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copiar]').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const aviso = b.closest('.compartir')?.querySelector('.compartir__aviso');
+      try {
+        await navigator.clipboard.writeText(b.dataset.copiar ?? '');
+        if (aviso) aviso.textContent = 'Enlace copiado';
+      } catch {
+        if (aviso) aviso.textContent = 'No se pudo copiar. Copia la dirección desde la barra del navegador.';
+      }
+    });
+  });
+</script>

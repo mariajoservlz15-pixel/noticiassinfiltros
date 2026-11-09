@@ -1,0 +1,2 @@
+Aquí van las fotos de las presentadoras (formato JPG, vertical, menos de 500 KB).
+Ejemplo de nombre: camila.jpg  ->  en presentadoras.ts se escribe "/fotos/camila.jpg"

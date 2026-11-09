@@ -1,8 +1,16 @@
 ---
-import Base from "../layouts/Base.astro";
-import Pendiente from "../components/Pendiente.astro";
+import Base from '../layouts/Base.astro';
+import Voz from '../components/Voz.astro';
+import { presentadoras } from '../data/presentadoras';
 ---
 
-<Base titulo="Nosotras">
-  <Pendiente titulo="Nosotras" paso="paso 3" />
+<Base titulo="Nosotras" descripcion="Conoce a María José, Mariana y Camila, las tres voces de Noticias sin filtros.">
+  <div class="contenedor pagina seccion">
+    <div class="encabezado-seccion">
+      <h1 class="titulo-seccion">Nosotras</h1>
+    </div>
+    <ul class="voces">
+      {presentadoras.map((p) => <Voz p={p} />)}
+    </ul>
+  </div>
 </Base>

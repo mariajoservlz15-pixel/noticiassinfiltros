@@ -1,0 +1,20 @@
+---
+import type { Presentadora } from '../data/presentadoras';
+interface Props { p: Presentadora; compacta?: boolean; }
+const { p, compacta = false } = Astro.props;
+const parrafos = p.bio.split('\n').map((x) => x.trim()).filter(Boolean);
+const fotoValida = p.foto.startsWith('/fotos/') || p.foto.startsWith('https://');
+---
+
+<li class:list={['voz', { 'voz--compacta': compacta }]}>
+  <div class="voz__retrato">
+    {fotoValida
+      ? <img src={p.foto} alt={`Foto de ${p.nombre}`} width="600" height="800" loading="lazy" />
+      : <span aria-hidden="true">{p.nombre.charAt(0)}</span>}
+  </div>
+  <h3 class="voz__nombre">{p.nombre}</h3>
+  <p class="voz__rol">{p.rol}</p>
+  {parrafos.length > 0
+    ? <div class="voz__bio">{parrafos.map((t) => <p>{t}</p>)}</div>
+    : <p class="voz__bio"><span class="demo">Demo</span> Biografía pendiente.</p>}
+</li>

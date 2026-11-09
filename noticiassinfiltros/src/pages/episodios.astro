@@ -1,8 +1,35 @@
 ---
-import Base from "../layouts/Base.astro";
-import Pendiente from "../components/Pendiente.astro";
+import Base from '../layouts/Base.astro';
+import { episodiosPublicados } from '../lib/episodios';
+import { fechaLarga } from '../lib/utiles';
+const lista = episodiosPublicados();
 ---
 
-<Base titulo="Episodios">
-  <Pendiente titulo="Episodios" paso="paso 3" />
+<Base titulo="Episodios" descripcion="Todos los episodios de Noticias sin filtros, el podcast de conversación sobre noticias y actualidad.">
+  <div class="contenedor pagina seccion">
+    <div class="encabezado-seccion">
+      <h1 class="titulo-seccion">Episodios</h1>
+    </div>
+
+    {lista.length === 0 ? (
+      <p class="nota">Aún no hay episodios publicados. Vuelve pronto.</p>
+    ) : (
+      <ul class="episodios">
+        {lista.map((e) => (
+          <li class="tarjeta-ep">
+            <a class="tarjeta-ep__enlace" href={`/episodios/${e.numero}`}>
+              <div class="tarjeta-ep__imagen">
+                <img src={e.miniatura} alt="" width="480" height="360" loading="lazy" />
+                <span class="tarjeta-ep__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg></span>
+              </div>
+              <p class="tarjeta-ep__numero">Episodio {e.numero}</p>
+              <h2 class="tarjeta-ep__titulo">{e.titulo}</h2>
+              <p class="tarjeta-ep__fecha">{fechaLarga(e.fecha)}</p>
+              <p class="tarjeta-ep__resumen">{e.descripcion.replace(/\n/g, ' ')}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
 </Base>

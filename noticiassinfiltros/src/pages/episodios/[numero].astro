@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import Compartir from '../../components/Compartir.astro';
+import { episodiosPublicados } from '../../lib/episodios';
+import { fechaLarga } from '../../lib/utiles';
+
+export function getStaticPaths() {
+  return episodiosPublicados().map((e) => ({
+    params: { numero: String(e.numero) },
+    props: { episodio: e },
+  }));
+}
+
+const { episodio } = Astro.props;
+const url = new URL(`/episodios/${episodio.numero}`, Astro.site).toString();
+const parrafos = episodio.descripcion.split('\n').map((t) => t.trim()).filter(Boolean);
+const resumen = episodio.descripcion.replace(/\n/g, ' ').slice(0, 160);
+
+const datos = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: episodio.titulo,
+  description: resumen,
+  thumbnailUrl: episodio.miniatura,
+  uploadDate: episodio.fecha,
+  embedUrl: `https://www.youtube.com/embed/${episodio.ytId}`,
+};
+const json = JSON.stringify(datos).replace(/</g, '\\u003c');
+---
+
+<Base titulo={`Episodio ${episodio.numero}: ${episodio.titulo}`} descripcion={resumen} imagen={episodio.miniatura}>
+  <script type="application/ld+json" set:html={json} slot="head" />
+
+  <article class="contenedor pagina seccion episodio-detalle">
+    <p class="tarjeta-ep__numero">Episodio {episodio.numero}</p>
+    <h1 class="episodio-detalle__titulo">{episodio.titulo}</h1>
+    <p class="tarjeta-ep__fecha">{fechaLarga(episodio.fecha)}</p>
+
+    <div class="video">
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${episodio.ytId}?rel=0`}
+        title={`Video: ${episodio.titulo}`}
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div class="episodio-detalle__texto">
+      {parrafos.map((t) => <p>{t}</p>)}
+    </div>
+
+    <Compartir url={url} titulo={`${episodio.titulo} | Noticias sin filtros`} />
+
+    <p class="nota"><a href="/episodios">Volver a todos los episodios</a></p>
+  </article>
+</Base>

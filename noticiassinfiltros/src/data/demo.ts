@@ -1,11 +1,4 @@
-// DATOS DE DEMOSTRACIÓN. Se reemplazarán por la base de datos en el paso 2.
-// Solo los nombres de las presentadoras vienen del equipo; todo lo demás es relleno.
-
-export const presentadoras = [
-  { nombre: 'María José', inicial: 'M', rol: 'Presentadora' },
-  { nombre: 'Mariana', inicial: 'M', rol: 'Presentadora' },
-  { nombre: 'Camila', inicial: 'C', rol: 'Presentadora' },
-];
+// DATOS DE DEMOSTRACIÓN (se muestran solo mientras no haya contenido real).
 
 export const episodioDestacado = {
   numero: 1,
@@ -18,5 +11,3 @@ export const noticiasDemo = [
   { categoria: 'Mundo', titulo: 'Titular de ejemplo: una noticia internacional', resumen: 'Resumen de demostración. Cada noticia tendrá imagen, autor, fecha y categoría.' },
   { categoria: 'Cultura', titulo: 'Titular de ejemplo: un tema de conversación', resumen: 'Resumen de demostración. Los lectores podrán comentar y compartir.' },
 ];
-
-export const redes = ['YouTube', 'Instagram', 'TikTok', 'X'];

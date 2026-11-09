@@ -260,3 +260,52 @@ body::after {
   .marca__linea::after { display: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ============ Episodios ============ */
+.pagina { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
+.boton--chico { padding: 0.5rem 1rem; font-size: 0.98rem; }
+
+.episodios { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); }
+@media (max-width: 62rem) { .episodios { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 40rem) { .episodios { grid-template-columns: 1fr; } }
+.tarjeta-ep__enlace { display: block; text-decoration: none; }
+.tarjeta-ep__imagen { position: relative; aspect-ratio: 16 / 9; background: var(--grafito); overflow: hidden; border: 1px solid var(--humo); }
+.tarjeta-ep__imagen img { width: 100%; height: 100%; object-fit: cover; }
+.tarjeta-ep__play {
+  position: absolute; left: 0.9rem; bottom: 0.9rem;
+  width: 2.6rem; height: 2.6rem; border-radius: 50%; display: grid; place-items: center; background: var(--rojo);
+}
+.tarjeta-ep__play svg { width: 1.1rem; height: 1.1rem; fill: #fff; margin-left: 0.1rem; }
+.tarjeta-ep__numero { color: var(--rojo-texto); font-weight: 600; margin-top: 0.9rem; }
+.tarjeta-ep__titulo { font-size: var(--t-1); line-height: 1.2; margin-top: 0.15rem; }
+.tarjeta-ep__enlace:hover .tarjeta-ep__titulo { text-decoration: underline; text-underline-offset: 0.2em; }
+.tarjeta-ep__fecha { color: var(--ceniza); font-size: 0.98rem; margin-top: 0.3rem; }
+.tarjeta-ep__resumen {
+  color: var(--ceniza); font-size: 1rem; margin-top: 0.5rem;
+  display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.episodio-detalle { max-width: 54rem; }
+.episodio-detalle__titulo { font-family: var(--f-titulo); font-weight: 400; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1; text-transform: uppercase; margin-top: 0.25rem; }
+.video { position: relative; aspect-ratio: 16 / 9; margin-top: 1.75rem; background: var(--grafito); border: 1px solid var(--humo); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.episodio-detalle__texto { margin-top: 1.75rem; max-width: 65ch; }
+.episodio-detalle__texto p + p { margin-top: 1rem; }
+
+.compartir { margin-top: 2.25rem; padding-top: 1.25rem; border-top: 1px solid var(--humo); }
+.compartir__etiqueta { color: var(--ceniza); }
+.compartir__lista { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.6rem; }
+.compartir__aviso { color: var(--ceniza); font-size: 0.98rem; margin-top: 0.6rem; min-height: 1.6em; }
+
+/* ============ Presentadoras con foto ============ */
+.voz__retrato { overflow: hidden; }
+.voz__retrato img { width: 100%; height: 100%; object-fit: cover; }
+.voz__bio p + p { margin-top: 0.6rem; }
+.voz--compacta .voz__bio { display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ============ Portada con episodio real ============ */
+.episodio-destacado__enlace { display: block; text-decoration: none; }
+.episodio-destacado__imagen { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.episodio-destacado__enlace .episodio-destacado__play { position: relative; z-index: 1; }
+.red--enlace { color: var(--papel); text-decoration: none; display: inline-block; }
+.red--enlace:hover { border-color: var(--papel); }
