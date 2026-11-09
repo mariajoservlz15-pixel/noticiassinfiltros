@@ -1,15 +1,11 @@
-// ============================================================
-//  EPISODIOS DE NOTICIAS SIN FILTROS
-//  Para agregar uno: copia un bloque completo { ... }, pégalo
-//  debajo y cambia los datos. No olvides la coma al final del bloque.
-//
-//  Reglas:
-//   - No uses comillas dobles (") dentro de los textos. Usa « » o “ ”.
-//   - fecha en formato AAAA-MM-DD (año-mes-día).
-//   - youtube: pega el enlace tal cual lo copias de YouTube.
-//   - publicado: true lo muestra en la web; false lo oculta.
-//   - Para separar párrafos en la descripción escribe \n
-// ============================================================
+  {
+    numero: 1,
+    titulo: "Título del episodio",
+    fecha: "2026-11-15",
+    descripcion: "De qué trata el episodio.\nSegundo párrafo opcional.",
+    youtube: "https://youtu.be/I9RTR8yZmyo?si=6ziV_vFHkXXXPYou",
+    publicado: true,
+  },
 
 export interface Episodio {
   numero: number;
